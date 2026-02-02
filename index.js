@@ -1,3 +1,17 @@
+const buttons = document.querySelectorAll("button");
+const result = document.querySelector(".result");
+
+let humanChoice = "";
+let humanScore = 0;
+let computerScore = 0;
+
+buttons.forEach(button => {
+    button.addEventListener("click", (e) => {
+        humanChoice = e.target.value;
+        playGame();
+    })
+});
+
 // to get the computer choice
 function getComputerChoice(){
     const choice = Math.floor(Math.random() * 3 + 1);
@@ -8,18 +22,9 @@ function getComputerChoice(){
     }
 }
 
-// to get the human choice
-function getHumanChoice(){
-    return window.prompt("Choose: rock, paper, scissors");
-}
-
 // play the round
-function playRound(){
+function playRound(humanChoice){
     const computerChoice = getComputerChoice();
-    const humanChoice = getHumanChoice();
-
-    console.log(computerChoice, humanChoice);
-
 
     if(humanChoice == computerChoice) return 'draw'
     else{
@@ -33,25 +38,14 @@ function playRound(){
 // play a game for 5 rounds
 function playGame(){
     // to keep track of the scores
-    let humanScore = 0;
-    let computerScore = 0;
-    let roundNo = 0;
 
-    while(roundNo < 5){
-        const wonBy = playRound();
-        console.log(wonBy);
-        if(wonBy == "human") humanScore++
-        else if(wonBy == "bot") computerScore++;
-        roundNo++;
-    }
+    const wonBy = playRound(humanChoice);
+    
+    if(wonBy == "human") humanScore++
+    else if(wonBy == "bot") computerScore++;
 
-    console.log(humanScore, computerScore);
-
-    if(humanScore == computerScore) return "It's A Draw"
-    else {
-        return (humanScore > computerScore) ? "Human Wins" : "Bot Wins";
-    }
+    result.textContent = `Human: ${humanScore} Computer: ${computerScore}`
+    
+    if(humanScore === 5) result.textContent = "Humans Won!!!";
+    if(computerScore === 5) result.textContent = "Computer Won!!!";
 }
-
-
-console.log(playGame());
