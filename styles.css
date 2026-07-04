@@ -6,4 +6,30 @@
 
 body {
     background-color: grey;
+    text-align: center;
+    font-family: Cambria;
+}
+
+h1{
+    margin: 5rem;
+    font-size: 3rem;
+}
+
+.buttons{
+    display: flex;
+    justify-content: center;
+    gap: 3em;
+}
+
+button{
+    font-size: 3rem;
+    border: none;
+    padding: 2rem;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: gray;
+}
+
+#result {
+    font-size: 1.5rem;
 }

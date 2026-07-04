@@ -1,39 +1,65 @@
+'use strict';
+
+const buttons = document.querySelectorAll('button');
+const result = document.querySelector('#result');
+
+let humanScore = 0;
+let computerScore = 0;
+
 function getComputerChoice(){
-    return Math.round(Math.random() * 2) + 1;
-}
-
-function getHumanChoice(){
-    return Number(prompt("Enter a value: 1 - Rock, 2 - Paper, 3 - Scissors"));
-}
-
-function playGame(){
-    let humanScore = 0;
-    let computerScore = 0;
-
-    
-    for(let i=0; i<5; i++){
-        let humanChoice = getHumanChoice();
-        let computerChoice = getComputerChoice();
-        playRound(humanChoice, computerChoice);
+    switch(Math.floor(Math.random() * 3) + 1){
+        case 1: return 'rock';
+        break;
+        case 2: return 'paper';
+        break;
+        case 3: return 'scissor';
     }
+}
 
-    function playRound(humanChoice, computerChoice){
+buttons.forEach(button => {
+    button.addEventListener('click', (event) => {
+        const humanChoice = event.target.id;
+        switch(humanChoice){
+            case 'rock' : playGame('rock', getComputerChoice());
+            break;
+            case 'paper' : playGame('paper', getComputerChoice());
+            break;
+            case 'scissor' : playGame('scissor', getComputerChoice());
+        }
+    })
+});
+
+function playGame(humanChoice, computerChoice){
+
+        console.log(humanChoice);
+        console.log(computerChoice);
+
         if(humanChoice == computerChoice) return "It's a tie";
-        if(humanChoice == 1){
-            if(computerChoice==2) computerScore++;
-            else humanScore++;
-        }
-        else if(humanChoice == 2){
-            if(computerChoice==1) computerScore++;
-            else humanScore++;
-        }
-        else if(humanChoice == 3){
-            if(computerChoice == 1) computerScore++;
-            else humanScore++;
-        }
-    }
 
-    return(humanScore > computerScore) ? "Human Wins!!!" : "Computer Wins!!!"
-}
+        if(humanChoice == 'rock'){
+            if(computerChoice=='paper') computerScore++;
+            else humanScore++;
+        }
+        else if(humanChoice == 'paper'){
+            if(computerChoice=='rock') computerScore++;
+            else humanScore++;
+        }
+        else if(humanChoice == 'scissor'){
+            if(computerChoice == 'rock') computerScore++;
+            else humanScore++;
+        }
 
-console.log(playGame());
+        console.log(humanChoice, computerChoice);
+        console.log(humanScore, computerScore);
+        
+        if(humanScore == 5){
+            result.textContent = "GAME ENDS!!! Human Wins!!!";
+        } else if(computerScore == 5){
+            result.textContent = "GAME ENDS!!! Computer Wins!!!";
+        }
+
+        if(humanScore==5 || computerScore==5){
+            humanScore=0;
+            computerScore=0;
+        }
+}    
